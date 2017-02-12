@@ -1,15 +1,22 @@
 # original code
 # print(1+1)
 
-import math
+import functools
+from math import pi, e
 
 
-def c(n,r):
-    f = math.factorial
-    return f(n) / f(r) / f(n-r)
+def factorial(n):
+    return 1 if n == 0 else functools.reduce(lambda i, j: i*j, range(1, n+1))
 
-n, m = 100000, 100
-a = 4 * sum([((-1)**k)/(2*k+1) for k in range(n)]) / math.pi
-b = sum(1/math.factorial(k) for k in range(m)) / math.e
+
+def c(n, r):
+    return factorial(n) / factorial(r) / factorial(n-r)
+
+
+def sigma(f, n, r):
+    return sum(f(k) for k in range(n, r))
+
+a = 4 * sigma(lambda k: ((-1)**k)/(2*k+1), 0, 100000) / pi
+b = sigma(lambda k: 1/factorial(k), 0, 1000) / e
 
 print(a + b)
